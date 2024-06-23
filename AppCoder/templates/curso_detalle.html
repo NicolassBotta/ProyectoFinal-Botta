@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h1>Curso Detalle</h1>
+        
+
+<p> Nombre del curso: <i>{{curso.nombre}}</i></p>
+<p> camada: <i>{{curso.camada}}</i></p>
+<p>
+    <a href="{% url 'Listacursos' %}">Regresar</a>
+</p>
+{% endblock contenidoquecambia %}

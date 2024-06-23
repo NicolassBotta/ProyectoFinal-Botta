@@ -1,0 +1,33 @@
+        <!-- Navigation-->
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                <a class="navbar-brand" href="/app-coder/inicio/">Inicio</a>
+
+                <a class="navbar-brand" href="{% url 'Profesores' %}">Profesores</a>
+                <a class="navbar-brand" href="{% url 'Estudiantes' %}">Estudiantes</a>
+                <a class="navbar-brand" href="{% url 'Listacursos' %}">Cursos</a>
+                <a class="navbar-brand" href="{% url 'Entregables' %}">Entregables</a>
+                
+                {% if user.is_authenticated%}
+                    
+                    
+                        
+                    <p> Bienvenido {{user.username}}</p>
+                    <form method = "post" action = "{% url 'logout' %}">
+                     {% csrf_token %} <button type="submit">salir</button>
+                    </form>
+                    {% if request.user.avatar %}
+                        <img src="{{req.user.avatar.imagen.url}}" alt="" height="40px">
+                    {% endif %}
+                    
+                {% else %}
+                    <a class="btn btn-primary" href="{% url 'registrar' %}">Registrarse</a>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Ingresar usuario</a>
+                {% endif %}
+
+
+                    
+               
+
+            </div>
+        </nav>

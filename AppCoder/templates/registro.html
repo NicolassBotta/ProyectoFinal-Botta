@@ -1,0 +1,14 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h1> Registro</h1>
+
+
+<form action="{% url 'registrar' %}" method = "POST">{% csrf_token %}
+    {{miFormulario.as_p}}
+
+    <button type="submit"> Registrar </button>
+</form>
+    
+{% endblock contenidoquecambia %}

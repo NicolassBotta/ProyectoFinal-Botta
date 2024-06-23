@@ -1,0 +1,12 @@
+{% extends 'padre.html' %}
+    
+{% block contenidoquecambia %}
+
+<h2>Formulario de Profesor</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ miFormulario.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+{% endblock contenidoquecambia %}
