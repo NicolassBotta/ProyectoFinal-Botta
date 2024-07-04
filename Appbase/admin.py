@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(revista)
 admin.site.register(libro)
 admin.site.register(Comentario)
+admin.site.register(Avatar)

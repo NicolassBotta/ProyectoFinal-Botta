@@ -27,7 +27,7 @@ def products(request):
 def store(request):
     return render(request, 'tienda.html')
 
-#Registro-Login-Logout-Contrasenia
+#Registro-Login-Logout-Contrasenia-Avatar
 
 def log_in(req):
     if req.method == 'POST':
@@ -109,6 +109,23 @@ class Cambiarcontrasenia(LoginRequiredMixin,PasswordChangeView):
     success_url = reverse_lazy('editaperfil')
 
 
+def agregar_avatar(req):
+    if req.method == 'POST':
+        miFormulario = Avatarformulario(req.POST, req.FILES)
+        
+        if miFormulario.is_valid():
+            data = miFormulario.cleaned_data
+            avatar, created = Avatar.objects.get_or_create(user=req.user)
+            avatar.imagen = data["imagen"]
+            avatar.save()
+            return render(req, "padre.html", {"message": "Avatar cargado con éxito"})
+        else:
+            return render(req, "padre.html", {"message": "Datos inválidos"})
+    else:
+        miFormulario = Avatarformulario()
+        return render(req, "registro-login-perfiles/agregaravatar.html", {"miFormulario": miFormulario})
+
+
 #CRUD Revistas
 
 
@@ -123,9 +140,13 @@ class RevistadetailView(LoginRequiredMixin, DetailView):
 
 class RevistaCreateView(LoginRequiredMixin, CreateView):
     model = revista
-    template_name = "revista_crear.html"
-    form_class = RevistaForm
+    template_name = 'revista_crear.html'
+    fields = ['editorial', 'titulo', 'telefono_del_duenio', 'imagen']
     success_url = reverse_lazy('ListaRevistas')
+
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user 
+        return super().form_valid(form)
 
 class RevistaUpdateView(LoginRequiredMixin, UpdateView):
     model = revista
@@ -133,11 +154,18 @@ class RevistaUpdateView(LoginRequiredMixin, UpdateView):
     form_class = RevistaForm
     success_url = reverse_lazy('ListaRevistas')
 
+    def test_func(self):
+        revista = self.get_object()
+        return self.request.user == revista.usuario
+
 class RevistaDeleteView(LoginRequiredMixin, DeleteView):
     model = revista
     template_name = "revista_borrar.html"
     success_url = reverse_lazy('ListaRevistas')
 
+    def test_func(self):
+        revista = self.get_object()
+        return self.request.user == revista.usuario
 
 
 #CRUD Libros
@@ -150,12 +178,22 @@ class LibroListView(LoginRequiredMixin, ListView):
 class LibroDetailView(LoginRequiredMixin, DetailView):
     model = libro
     template_name = "libro_detalle.html"
+    context_object_name = 'libro'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['nombre_creador'] = self.object.usuario.username
+        return context
 
 class LibroCreateView(LoginRequiredMixin, CreateView):
     model = libro
     template_name = "libro_crear.html"
     form_class = LibroForm
     success_url = reverse_lazy('ListaLibros')
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 class LibroUpdateView(LoginRequiredMixin, UpdateView):
     model = libro
@@ -163,10 +201,19 @@ class LibroUpdateView(LoginRequiredMixin, UpdateView):
     form_class = LibroForm
     success_url = reverse_lazy('ListaLibros')
 
+
+    def test_func(self):
+        libro = self.get_object()
+        return self.request.user == libro.usuario
+
 class LibroDeleteView(LoginRequiredMixin, DeleteView):
     model = libro
     template_name = "libro_borrar.html"
     success_url = reverse_lazy('ListaLibros')
+
+    def test_func(self):
+        libro = self.get_object()
+        return self.request.user == libro.usuario
 
 
 #Foro

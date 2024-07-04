@@ -44,9 +44,15 @@ class FormularioDeCambioDeContra(PasswordChangeForm):
 class RevistaForm(forms.ModelForm):
     class Meta:
         model = revista
-        fields = ['editorial', 'titulo', 'nombre_del_duenio', 'apellido_del_duenio', 'telefono_del_duenio', 'imagen']
+        fields = ['editorial', 'titulo', 'telefono_del_duenio', 'imagen']
 
 class LibroForm(forms.ModelForm):
     class Meta:
         model = libro
-        fields = ['nombre', 'autor', 'nombre_del_duenio', 'apellido_del_duenio', 'telefono_del_duenio', 'imagen']
+        fields = ['nombre', 'autor', 'telefono_del_duenio', 'imagen']
+
+
+class Avatarformulario(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ['imagen']

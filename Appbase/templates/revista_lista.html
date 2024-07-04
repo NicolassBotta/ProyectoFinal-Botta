@@ -8,6 +8,8 @@
       <li>
         <a href="{% url 'DetalleRevista' revista.pk %}">{{ revista.titulo }}</a>
       </li>
+      {% empty %}
+      <li>No hay Revistas disponibles.</li>
     {% endfor %}
   </ul>
   <a href="{% url 'CrearRevista' %}">Crear Nueva Revista</a>

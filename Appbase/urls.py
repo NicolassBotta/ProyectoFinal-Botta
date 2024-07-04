@@ -13,12 +13,13 @@ urlpatterns = [
     path('Tienda/', store, name='tienda'),
     
 
-    #registro-login-perfiles:
+    #registro-login-perfiles-Contrasenia-Avatar:
     path("login", log_in, name = "login"),
     path("registro", registro, name = "registrar"),
     path("logout", LogoutView.as_view(template_name='registro-login-perfiles/logout.html'), name = "logout"),
     path("editarperfil", editarperfil, name = "editaperfil"),
     path("cambiarcontrasenia", views.Cambiarcontrasenia.as_view(), name = "Cambiarcontrasenia"),
+    path('agregar_avatar/', agregar_avatar, name='agregar_avatar'),
 
     #Revistas
     path("Revistas/lista", views.RevistaListView.as_view(), name = "ListaRevistas"),
