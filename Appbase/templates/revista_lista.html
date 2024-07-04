@@ -1,0 +1,17 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h2>Lista de Revistas</h2>
+  <ul>
+    {% for revista in Revistas %}
+      <li>
+        <a href="{% url 'DetalleRevista' revista.pk %}">{{ revista.titulo }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'CrearRevista' %}">Crear Nueva Revista</a>
+  <br>
+  <a href="{% url 'tienda' %}">volver</a>
+    
+{% endblock contenidoquecambia %}

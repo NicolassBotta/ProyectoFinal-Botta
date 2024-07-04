@@ -15,7 +15,7 @@
     <body>
         <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <span class="site-heading-upper text-primary mb-3">Cafetería y pastelería</span>
+                <span class="site-heading-upper text-primary mb-3">Cafetería y centro de lecturas</span>
                 <span class="site-heading-lower">La Casa de Alicia</span>
             </h1>
         </header>
@@ -27,19 +27,24 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'inicio' %}">Inicio</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'about' %}">sobre Nosotros</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'productos' %}">Productos</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'tienda' %}">Tienda</a></li>
-                {% if user.is_authenticated%}
-                    
-                    <p class="nav-link text-uppercase" > Bienvenido {{user.username}}</p>
-                {% comment %} <form method = "post" action = "{% url 'logout' %}">
-                 {% csrf_token %} <button type="submit">salir</button>
-                </form> {% endcomment %}
-            
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'about' %}">Acerca de mí</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'productos' %}">Productos y foro</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'tienda' %}">Intercambio de lecturas</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item px-lg-4">
+                        <span class="nav-link text-uppercase">Sesion activa: {{ user.username }}</span>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="{% url 'editaperfil' %}">Perfil</a></li>
+                    </li>
+                    <li class="nav-item px-lg-4">
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link text-uppercase" style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                                Cerrar sesión
+                            </button>
+                        </form>
+                    </li>
                 {% endif %}
             </ul>
-            
         </div>
     </div>
 </nav>

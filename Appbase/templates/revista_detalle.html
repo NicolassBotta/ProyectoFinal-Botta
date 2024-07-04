@@ -1,0 +1,17 @@
+
+
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h2>{{ revista.titulo }}</h2>
+  <p>Editorial: {{ revista.editorial }}</p>
+  <p>Dueño: {{ revista.nombre_del_duenio }} {{ revista.apellido_del_duenio }}</p>
+  <p>Teléfono: {{ revista.telefono_del_duenio }}</p>
+  {% if revista.imagen %}
+    <img src="{{ revista.imagen.url }}" alt="Imagen de {{ revista.titulo }}">
+  {% endif %}
+  <a href="{% url 'EditarRevista' revista.pk %}">Editar</a>
+  <a href="{% url 'BorrarRevista' revista.pk %}">Eliminar</a>
+    
+{% endblock contenidoquecambia %}

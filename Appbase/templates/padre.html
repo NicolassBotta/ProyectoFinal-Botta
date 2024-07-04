@@ -3,7 +3,7 @@
     {% load static %}
     
         
-        {% include 'navbar.html' %}
+        {% include 'navbaryencabezado.html' %}
 
         <section class="page-section cta">
             <div class="container">
@@ -15,6 +15,9 @@
                                 {% block contenidoquecambia %}
             
                                     <p>{{message}}</p>
+                                    <br>
+                                    <a class="nav-link text-uppercase" href="{% url 'inicio' %}">Haz click aqui para volver al inicio</a>
+
         
                                 {% endblock contenidoquecambia %}
               

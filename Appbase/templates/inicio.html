@@ -3,20 +3,30 @@
     {% load static %}
     
         
-        {% include 'navbar.html' %}
+        {% include 'navbaryencabezado.html' %}
 
         <section class="page-section clearfix">
             <div class="container">
                 <div class="intro">
                     <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'assets/img/intro.jpg' %}" alt="..." />
                     <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        {% if  not user.is_authenticated %}
                         <h2 class="section-heading mb-4">
-                            <span class="section-heading-upper">Compra desde la web!</span>
+                            <span class="section-heading-upper">Opina y organiza lecturas en la web!</span>
                             <span class="section-heading-lower">Registrate o inicia sesion: </span>
                         </h2>
+                        
                         <div class="submit"><a class="btn btn-primary btn-xl" href="{% url 'registrar' %}">Registrate</a></div>
 
                         <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="{% url 'login' %}">inicia sesion</a></div>
+                        {% else %}
+                        <h2 class="section-heading mb-4">
+                            <span class="section-heading-upper">Opina y organiza lecturas en la web!</span>
+                            <span class="section-heading-lower">Bienvenido {{user.first_name}}! Dirigete al foro para opinar o a Intercambio de lecturas para leer nuevos horizontes! </span>
+                        </h2>
+
+                        {% endif %}
+                        
                     </div>
                 </div>
             </div>

@@ -1,0 +1,15 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h2>{{ libro.nombre }}</h2>
+  <p>Autor: {{ libro.autor }}</p>
+  <p>Dueño: {{ libro.nombre_del_duenio }} {{ libro.apellido_del_duenio }}</p>
+  <p>Teléfono del Dueño: {{ libro.telefono_del_duenio }}</p>
+  {% if libro.imagen %}
+    <img src="{{ libro.imagen.url }}" alt="Imagen de {{ libro.nombre }}">
+  {% endif %}
+  <a href="{% url 'EditarLibro' libro.pk %}">Editar</a>
+  <a href="{% url 'BorrarLibro' libro.pk %}">Eliminar</a>
+    
+{% endblock contenidoquecambia %}

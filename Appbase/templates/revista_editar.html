@@ -1,0 +1,12 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenidoquecambia %}
+      
+<h2>{% if object %}Editar Revista{% else %}Crear Revista{% endif %}</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+    
+{% endblock contenidoquecambia %}

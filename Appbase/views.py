@@ -1,14 +1,18 @@
 from django.http import HttpResponse
 from django.shortcuts import render , redirect
 from django.urls import reverse_lazy
-from .models import cliente
+from .models import *
 from .forms import *
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
+from django.utils import timezone
+from .models import Comentario
 
 
 def inicio(request):
@@ -23,7 +27,7 @@ def products(request):
 def store(request):
     return render(request, 'tienda.html')
 
-
+#Registro-Login-Logout-Contrasenia
 
 def log_in(req):
     if req.method == 'POST':
@@ -40,12 +44,12 @@ def log_in(req):
 
             if user is not None:
                 login(req, user)
-                return render(req,"padre.html",{"message": f"Bienvenido {usuario}"})
+                return render(req,"inicio.html",{})
             else:
                 return render(req, "padre.html",{"message": "Datos erroneos"})
             
         else:
-            return render(req, "padre.html",{"message": "Datos invalidos"})
+            return render(req, "padre.html",{"message": "Datos invalidos, vuelva al inicio"})
     else:
 
         miFormulario = AuthenticationForm()
@@ -54,21 +58,151 @@ def log_in(req):
     
 def registro(req):
     if req.method == 'POST':
-
-        miFormulario = UserCreationForm(req.POST)
+        miFormulario = FormularioDeRegistroDeUsuario(req.POST)  
 
         if miFormulario.is_valid():
+            user = miFormulario.save()  
+            username = miFormulario.cleaned_data.get('username')
+
+
+            return render(req, "padre.html", {"message": f"Usuario {username} creado, vuelve al inicio para iniciar sesión."})
+        else:
+            return render(req, "padre.html", {"message": "Datos inválidos, vuelva al inicio"})
+    else:
+        miFormulario = FormularioDeRegistroDeUsuario()
+        return render(req, "registro-login-perfiles/registro.html", {"miFormulario": miFormulario})
+    
+
+def editarperfil(req):
+
+    usuario = req.user
+
+    if req.method == 'POST':
+
+        miFormulario = FormularioDeEdicionDeUsuario(req.POST, instance=req.user) 
+
+        if miFormulario.is_valid():
+            
             data = miFormulario.cleaned_data
 
-            usuario = data["username"]
-            
-            miFormulario.save()
 
-            return render(req,"padre.html",{"message": f"Usuario {usuario} creado"})
+            usuario.first_name = data["first_name"]
+            usuario.last_name = data["last_name"]
+            usuario.email = data["email"]
+
+            usuario.save()
+
+            return render(req, "inicio.html",{"message": "Datos actualizados con exito"})
         else:
-            return render(req, "padre.html",{"message": "   Datos invalidos"})
+            return render(req, "inicio.html",{"message": "datos invalidos"})
     else:
 
-        miFormulario = UserCreationForm()
+        miFormulario = FormularioDeEdicionDeUsuario(instance=req.user)
 
-        return render(req, "registro-login-perfiles/registro.html",{"miFormulario": miFormulario})
+
+        return render(req, "registro-login-perfiles/editarperfil.html",{"miFormulario": miFormulario})
+    
+
+class Cambiarcontrasenia(LoginRequiredMixin,PasswordChangeView):
+    form_class = FormularioDeCambioDeContra
+    template_name = 'registro-login-perfiles/cambiarcontra.html'
+    success_url = reverse_lazy('editaperfil')
+
+
+#CRUD Revistas
+
+
+class RevistaListView(LoginRequiredMixin, ListView):
+    model = revista
+    context_object_name = "Revistas"
+    template_name = "revista_lista.html"
+
+class RevistadetailView(LoginRequiredMixin, DetailView):
+    model = revista
+    template_name = "revista_detalle.html"
+
+class RevistaCreateView(LoginRequiredMixin, CreateView):
+    model = revista
+    template_name = "revista_crear.html"
+    form_class = RevistaForm
+    success_url = reverse_lazy('ListaRevistas')
+
+class RevistaUpdateView(LoginRequiredMixin, UpdateView):
+    model = revista
+    template_name = "revista_editar.html"
+    form_class = RevistaForm
+    success_url = reverse_lazy('ListaRevistas')
+
+class RevistaDeleteView(LoginRequiredMixin, DeleteView):
+    model = revista
+    template_name = "revista_borrar.html"
+    success_url = reverse_lazy('ListaRevistas')
+
+
+
+#CRUD Libros
+
+class LibroListView(LoginRequiredMixin, ListView):
+    model = libro
+    context_object_name = "Libros"
+    template_name = "libro_lista.html"
+
+class LibroDetailView(LoginRequiredMixin, DetailView):
+    model = libro
+    template_name = "libro_detalle.html"
+
+class LibroCreateView(LoginRequiredMixin, CreateView):
+    model = libro
+    template_name = "libro_crear.html"
+    form_class = LibroForm
+    success_url = reverse_lazy('ListaLibros')
+
+class LibroUpdateView(LoginRequiredMixin, UpdateView):
+    model = libro
+    template_name = "libro_editar.html"
+    form_class = LibroForm
+    success_url = reverse_lazy('ListaLibros')
+
+class LibroDeleteView(LoginRequiredMixin, DeleteView):
+    model = libro
+    template_name = "libro_borrar.html"
+    success_url = reverse_lazy('ListaLibros')
+
+
+#Foro
+
+@login_required
+def guardar_comentario(request):
+    if request.method == 'POST':
+        comentario_texto = request.POST.get('comentario', '')
+        seccion = request.POST.get('seccion', '')
+        usuario = request.user.username 
+        fecha_comentario = timezone.now()
+        
+        
+        comentario = Comentario(usuario=usuario, texto=comentario_texto, fecha_comentario=fecha_comentario, seccion=seccion)
+        comentario.save()
+        
+        return redirect('productos')  
+    return redirect('productos') 
+
+@login_required
+def productos(request):
+    comentarios1 = Comentario.objects.filter(seccion='1').order_by('-fecha_comentario')
+    comentarios2 = Comentario.objects.filter(seccion='2').order_by('-fecha_comentario')  
+    comentarios3 = Comentario.objects.filter(seccion='3').order_by('-fecha_comentario')  
+    comentarios4 = Comentario.objects.filter(seccion='4').order_by('-fecha_comentario')
+    comentarios5 = Comentario.objects.filter(seccion='5').order_by('-fecha_comentario')  
+    comentarios6 = Comentario.objects.filter(seccion='6').order_by('-fecha_comentario')  
+    comentarios7 = Comentario.objects.filter(seccion='7').order_by('-fecha_comentario')  
+    
+    context = {
+        'comentarios1': comentarios1,
+        'comentarios2': comentarios2,
+        'comentarios3': comentarios3,
+        'comentarios4': comentarios4,
+        'comentarios5': comentarios5,
+        'comentarios6': comentarios6,
+        'comentarios7': comentarios7,
+    }
+    return render(request, 'productos.html', context)

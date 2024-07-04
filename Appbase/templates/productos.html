@@ -2,22 +2,198 @@
 <html lang="en">
     {% load static %}
     
-        {% include 'navbar.html' %}
+        {% include 'navbaryencabezado.html' %}
         
-        <section class="page-section">
+        <section class="page-section smaller-section">
             <div class="container">
                 <div class="product-item">
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex ms-auto rounded">
                             <h2 class="section-heading mb-0">
                                 <span class="section-heading-upper">Mezclado a la perfección</span>
-                                <span class="section-heading-lower">Cafés y tés</span>
+                                <span class="section-heading-lower">Tés</span>
                             </h2>
                         </div>
                     </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/products-01.jpg' %}" alt="..." />
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper">Té negro</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\tenegro.jpg' %}" alt="..." />
+                            </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios1">
+                                        {% if comentarios1 %}
+                                            {% for comentario in comentarios1 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="1">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-item-description d-flex me-auto">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="page-section">
+            <div class="container">
+                <div class="product-item">
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper">Té marroquí</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\temarroqui.jpg' %}" alt="..." />
+                            </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios2">
+                                        {% if comentarios2 %}
+                                            {% for comentario in comentarios2 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="2">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="page-section">
+            <div class="container">
+                <div class="product-item">
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper">Té con limón</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\teconlimon.jpg' %}" alt="..." />
+                            </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios3">
+                                        {% if comentarios3 %}
+                                            {% for comentario in comentarios3 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="3">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="page-section">
+            <div class="container">
+                <div class="product-item">
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper">MargariTé</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\margarité.jpg' %}" alt="..." />
+                            </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios4">
+                                        {% if comentarios4 %}
+                                            {% for comentario in comentarios4 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="4">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="page-section smaller-section">
+            <div class="container">
+                <div class="product-item">
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex ms-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper"></span>
+                                <span class="section-heading-lower">Cafés</span>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="product-item-title d-flex">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
+                            <h2 class="section-heading mb-0">
+                                <span class="section-heading-upper">Expreso</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\expreso.jpg' %}" alt="..." />
+                            </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios5">
+                                        {% if comentarios5 %}
+                                            {% for comentario in comentarios5 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="5">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     <div class="product-item-description d-flex me-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">Nos enorgullecemos de nuestro trabajo, y eso se nota. Cada vez que nos pida una bebida, le garantizamos que será una experiencia que valdrá la pena. Ya sea que se trate de nuestro mundialmente famoso capuchino argentino, un refrescante té de hierbas helado o algo tan simple como una taza de café negro de especialidad, regresará por más.</p></div>
+                        
                     </div>
                 </div>
             </div>
@@ -28,15 +204,33 @@
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex me-auto rounded">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper">Delicias, buena comida</span>
-                                <span class="section-heading-lower">Panadería y Cocina</span>
+                                <span class="section-heading-upper">Caramel Macchiato</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\caramelmachiato.jpg' %}" alt="..." />
                             </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios6">
+                                        {% if comentarios6 %}
+                                            {% for comentario in comentarios6 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="6">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/products-02.jpg' %}" alt="..." />
-                    <div class="product-item-description d-flex ms-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">Nuestro menú de temporada ofrece deliciosos bocadillos, productos horneados e incluso comidas completas perfectas para el desayuno o el almuerzo. Siempre que sea posible, obtenemos nuestros ingredientes de granjas locales y orgánicas, junto con proveedores premium de productos especializados.</p></div>
-                    </div>
+                   
+                    
                 </div>
             </div>
         </section>
@@ -44,17 +238,35 @@
             <div class="container">
                 <div class="product-item">
                     <div class="product-item-title d-flex">
-                        <div class="bg-faded p-5 d-flex ms-auto rounded">
+                        <div class="bg-faded p-5 d-flex me-auto rounded">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper">De todo el mundo</span>
-                                <span class="section-heading-lower">Mezclas especiales a granel</span>
+                                <span class="section-heading-upper">Capuchino</span>
+                                <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets\img\capuchino.jpg' %}" alt="..." />
                             </h2>
+                            <div class="product-item-description d-flex ms-auto">
+                                <div class="bg-faded p-5 rounded">
+                                    <h3>Comentarios</h3>
+                                    <div id="comentarios7">
+                                        {% if comentarios7 %}
+                                            {% for comentario in comentarios7 %}
+                                                <p><strong>{{ comentario.usuario }}</strong> - {{ comentario.texto }} ({{ comentario.fecha_comentario|date:"Y-m-d H:i:s" }})</p>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p>No hay comentarios aún.</p>
+                                        {% endif %}
+                                    </div>
+                                    <form method="post" action="{% url 'guardar_comentario' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="seccion" value="7">
+                                        <input type="text" name="comentario" placeholder="Escribe tu comentario...">
+                                        <button type="submit">Enviar</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'assets/img/products-03.jpg' %}" alt="..." />
-                    <div class="product-item-description d-flex me-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">Viajar por el mundo en busca de café de la mejor calidad es algo de lo que enorgullecerse. Cuando nos visite, siempre encontrará nuevas mezclas de todo el mundo, principalmente de regiones de América Central y del Sur. Vendemos nuestras mezclas en pequeñas y grandes cantidades a granel. Visítenos en persona para obtener más detalles.</p></div>
-                    </div>
+                   
+                    
                 </div>
             </div>
         </section>

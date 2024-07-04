@@ -10,15 +10,22 @@
                 <div class="row">
                     <div class="col-xl-9 mx-auto">
                         <div class="cta-inner bg-faded text-center rounded">
-                            <h1>Registro</h1>
-                            <form action="{% url 'registrar' %}" method="POST">
-                                {% csrf_token %}
-                                {{ miFormulario.as_p }}
-                                <button type="submit">Registrar</button>
-                            </form>
-                            <div class="container text-center">
-                                <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Iniciar Sesión</a></p>
-                            </div>
+                            <h1> Cambiar contraseña</h1>
+
+
+                                <form action="" method="POST">{% csrf_token %}
+                                    <a class="" href="{% url 'editaperfil' %}">Volver al inicio</a>
+                                    <br>
+                                    <br>
+                                    <table>
+
+                                        {{form}}
+
+                                    </table>
+
+                                    <button> Cambiar </button>
+                                </form>
+    
                         </div>
                     </div>
                 </div>
@@ -55,3 +62,4 @@
         <!-- Core theme JS-->
         <script src="{% static 'js/scripts.js' %}"></script>
     </body>
+</html>
