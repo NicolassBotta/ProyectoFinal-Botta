@@ -11,8 +11,6 @@ Los usuarios pueden realizar las siguientes accciones:
 
 Publicar Libros y revistas para intercambiar Visualizar Libros y revistas publicadas, las cuales están distribuidas en las secciones "libros" y "revistas" Comentar Sobre los productos de la cafetería Editar el perfil de Usuario Cambiar la contraseña de Usuario Cerrar Sesión Login en caso de haber cerrado sesión Nota: La opción de editar y eliminar libros y revistas solo le está permitido al autor de la publicación del instrumento.
 
-Tecnología Utilizada Front-End Bootstrap v5.2.3 Back-End Python 3.12.3 Django 5.0.6 Pruebas Realizadas Ver archivo titulado "Pruebas Proyecto Final-Botta" el cual se encuentra en el presente repositorio: https://github.com/NicolassBotta/ProyectoFinal-Botta
-
 Este es un sistema web desarrollado con Django como proyecto final de aprendizaje.
 
 ## Funcionalidades
