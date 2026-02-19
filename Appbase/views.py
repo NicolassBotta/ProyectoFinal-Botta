@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import PasswordChangeView
 from django.utils import timezone
 from .models import Comentario
@@ -73,6 +73,7 @@ def registro(req):
         return render(req, "registro-login-perfiles/registro.html", {"miFormulario": miFormulario})
     
 
+@login_required
 def editarperfil(req):
 
     usuario = req.user
@@ -109,6 +110,7 @@ class Cambiarcontrasenia(LoginRequiredMixin,PasswordChangeView):
     success_url = reverse_lazy('editaperfil')
 
 
+@login_required
 def agregar_avatar(req):
     if req.method == 'POST':
         miFormulario = Avatarformulario(req.POST, req.FILES)
@@ -148,7 +150,7 @@ class RevistaCreateView(LoginRequiredMixin, CreateView):
         form.instance.usuario = self.request.user 
         return super().form_valid(form)
 
-class RevistaUpdateView(LoginRequiredMixin, UpdateView):
+class RevistaUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = revista
     template_name = "revista_editar.html"
     form_class = RevistaForm
@@ -158,7 +160,7 @@ class RevistaUpdateView(LoginRequiredMixin, UpdateView):
         revista = self.get_object()
         return self.request.user == revista.usuario
 
-class RevistaDeleteView(LoginRequiredMixin, DeleteView):
+class RevistaDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = revista
     template_name = "revista_borrar.html"
     success_url = reverse_lazy('ListaRevistas')
@@ -195,7 +197,7 @@ class LibroCreateView(LoginRequiredMixin, CreateView):
         form.instance.usuario = self.request.user
         return super().form_valid(form)
 
-class LibroUpdateView(LoginRequiredMixin, UpdateView):
+class LibroUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = libro
     template_name = "libro_editar.html"
     form_class = LibroForm
@@ -206,7 +208,7 @@ class LibroUpdateView(LoginRequiredMixin, UpdateView):
         libro = self.get_object()
         return self.request.user == libro.usuario
 
-class LibroDeleteView(LoginRequiredMixin, DeleteView):
+class LibroDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = libro
     template_name = "libro_borrar.html"
     success_url = reverse_lazy('ListaLibros')

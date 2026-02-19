@@ -1,4 +1,3 @@
-from re import template
 from django.urls import path
 from Appbase.views import *
 from Appbase import views
@@ -9,7 +8,7 @@ urlpatterns = [
     #html:
     path('', inicio, name='inicio'),
     path('about/', about, name='about'),
-    path('Productos/', products, name='productos'),
+    path('Productos/', products, name='productos_publico'),
     path('Tienda/', store, name='tienda'),
     
 
